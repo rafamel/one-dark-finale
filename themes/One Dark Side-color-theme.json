@@ -226,7 +226,6 @@
         "entity.other.attribute-name.id.css",
         "entity.other.attribute-name.id.html",
         "keyword.other",
-        "punctuation.definition.entity.css",
         "string.other.link.title.markdown"
       ],
       "settings": {
