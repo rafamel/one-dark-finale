@@ -1,0 +1,22 @@
+{
+  "name": "one-dark-side",
+  "displayName": "One Dark Side",
+  "description": "One Dark theme for VS Code",
+  "version": "0.0.1",
+  "publisher": "will-stone",
+  "engines": {
+    "vscode": "^1.12.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "One Dark Side",
+        "uiTheme": "vs-dark",
+        "path": "./themes/One Dark Side-color-theme.json"
+      }
+    ]
+  }
+}
