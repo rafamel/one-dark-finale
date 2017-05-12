@@ -200,6 +200,7 @@
         "constant.numeric",
         "constant.numeric.decimal.js",
         "constant.other.placeholder",
+        "entity.name.tag.js",
         "entity.other.attribute-name.class.css",
         "entity.other.attribute-name.css",
         "entity.other.attribute-name.html",
