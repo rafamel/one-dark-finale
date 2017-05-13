@@ -7,8 +7,8 @@ var gulp = require('gulp'),
 
 function replaceAll(from, to, text) {
     if (from !== to) {
+        console.log('Replacing ' + from + ' for ' + to);
         while(text.match(from)) {
-            console.log('Replacing ' + from + ' for ' + to);
             text = text.replace(from, to);
         }
     }
@@ -28,8 +28,7 @@ function getColors(text) {
             }
             return arr;
     }
-    let re = new RegExp('#([A-F0-9]){3,8}', 'i'),
-        arr = helper(text, re);
+    let arr = helper(text, /#([A-F0-9]){3,8}/i);
 
     let newArr = [];
     for (let i = 0; i < arr.length; i++) {
@@ -45,7 +44,9 @@ function mainToVivid(text) {
     current = getColors(text);
 
     for (let i = 0; i < current.length; i++) {
-        text = replaceAll(current[i][0], dictMainToVivid[current[i][1]], text);
+        if (dictMainToVivid.hasOwnProperty(current[i][1])) {
+            text = replaceAll(current[i][0], dictMainToVivid[current[i][1]], text);
+        }
     }
     return text;
 }
