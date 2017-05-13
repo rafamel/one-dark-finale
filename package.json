@@ -15,8 +15,24 @@
       {
         "label": "One Dark Side",
         "uiTheme": "vs-dark",
-        "path": "./themes/One Dark Side-color-theme.json"
+        "path": "./themes/One-Dark-Side.json"
+      },
+      {
+        "label": "One Dark Side Soft",
+        "uiTheme": "vs-dark",
+        "path": "./themes/One-Dark-Side-Soft.json"
+      },
+      {
+        "label": "One Dark Side Vivid",
+        "uiTheme": "vs-dark",
+        "path": "./themes/One-Dark-Side-Vivid.json"
+      },
+      {
+        "label": "One Dark Side Vivid Soft",
+        "uiTheme": "vs-dark",
+        "path": "./themes/One-Dark-Side-Vivid-Soft.json"
       }
     ]
   }
 }
+
