@@ -1,9 +1,9 @@
 {
-  "name": "one-dark-side",
-  "displayName": "One Dark Side",
-  "description": "One Dark theme for VS Code",
-  "version": "0.0.1",
-  "publisher": "will-stone",
+  "name": "one-dark-finale",
+  "displayName": "One Dark Finale",
+  "description": "One Dark theme variations for VSCode based on OneDark Pro",
+  "version": "0.0.2",
+  "publisher": "rafamel",
   "engines": {
     "vscode": "^1.12.0"
   },
@@ -13,24 +13,24 @@
   "contributes": {
     "themes": [
       {
-        "label": "One Dark Side",
+        "label": "One Dark Pro (F)",
         "uiTheme": "vs-dark",
-        "path": "./themes/One-Dark-Side.json"
+        "path": "./themes/OneDark-Pro.json"
       },
       {
-        "label": "One Dark Side Soft",
+        "label": "One Dark Pro Soft (F)",
         "uiTheme": "vs-dark",
-        "path": "./themes/One-Dark-Side-Soft.json"
+        "path": "./themes/OneDark-Pro-Soft.json"
       },
       {
-        "label": "One Dark Side Vivid",
+        "label": "One Dark Pro Vivid (F)",
         "uiTheme": "vs-dark",
-        "path": "./themes/One-Dark-Side-Vivid.json"
+        "path": "./themes/OneDark-Pro-Vivid.json"
       },
       {
-        "label": "One Dark Side Vivid Soft",
+        "label": "One Dark Pro Vivid Soft (F)",
         "uiTheme": "vs-dark",
-        "path": "./themes/One-Dark-Side-Vivid-Soft.json"
+        "path": "./themes/OneDark-Pro-Vivid-Soft.json"
       }
     ]
   }

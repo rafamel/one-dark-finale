@@ -1,12 +1,14 @@
 {
-  "name": "OneDarkBuilder",
+  "name": "one-dark-builder",
   "version": "0.1.1",
   "description": "Builds Vivid and Soft versions from base",
   "dependencies": {
     "fs": "0.0.2",
     "gulp": "^3.9.1",
+    "gulp-download": "0.0.1",
     "gulp-each": "^0.2.0",
     "gulp-rename": "^1.2.2",
+    "run-sequence": "^1.2.2",
     "tinycolor2": "^1.4.1"
   }
 }

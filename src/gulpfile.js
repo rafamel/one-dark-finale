@@ -1,9 +1,11 @@
-var gulp = require('gulp'),
+let gulp = require('gulp'),
     each = require('gulp-each'),
     filesystem = require('fs'),
     rename = require('gulp-rename'),
-    tinycolor = require('tinycolor2');
-
+    runSequence = require('run-sequence'),
+    tinycolor = require('tinycolor2'),
+    exec = require('child_process').exec,
+    download = require("gulp-download");
 
 function replaceAll(from, to, text) {
     if (from !== to) {
@@ -32,8 +34,12 @@ function getColors(text) {
 
     let newArr = [];
     for (let i = 0; i < arr.length; i++) {
-        let tColor = tinycolor(arr[i]),
-            hex = tColor.toHexString().toUpperCase();
+        let orColor = arr[i];
+        if (orColor.length > 4 && orColor.length < 7) {
+            orColor += '0'.repeat(7 - orColor.length);
+        }
+        let hex = tinycolor(orColor).toHexString().toUpperCase().slice(0,7);
+        if (arr[i].length > 7) hex += arr[i].slice(7).toUpperCase();
         newArr.push([arr[i], hex]);
     }
     return newArr;
@@ -44,8 +50,11 @@ function mainToVivid(text) {
     current = getColors(text);
 
     for (let i = 0; i < current.length; i++) {
-        if (dictMainToVivid.hasOwnProperty(current[i][1])) {
-            text = replaceAll(current[i][0], dictMainToVivid[current[i][1]], text);
+        let hex = current[i][1].slice(0,7);
+        if (dictMainToVivid.hasOwnProperty(hex)) {
+            let replaceTo = dictMainToVivid[hex];
+            if (current[i][1].length > 7) replaceTo += current[i][1].slice(7);
+            text = replaceAll(current[i][0], replaceTo, text);
         }
     }
     return text;
@@ -54,7 +63,9 @@ function mainToVivid(text) {
 function toSoft(text, desaturate, lighten, darken) {
     let current = getColors(text);
     for (let i = 0; i < current.length; i++) {
-        let hex = tinycolor(current[i][1]).desaturate(desaturate).lighten(lighten).darken(darken).toHexString().toUpperCase();
+        let hex = tinycolor(current[i][1].slice(0,7)).desaturate(desaturate).lighten(lighten).darken(darken).toHexString().toUpperCase();
+
+        if (current[i][1].length > 7) hex += current[i][1].slice(7);
         text = replaceAll(current[i][0], hex, text);
     }
     return text;
@@ -68,20 +79,14 @@ function changeColors(content, sufix, fun) {
     tokens = fun(tokens);
     content['tokenColors'] = JSON.parse(tokens);
     content['name'] += ' ' + sufix;
-    return JSON.stringify(content) + '\n';
+    return JSON.stringify(content, null, 2); + '\n';
 }
 
 
 gulp.task('mains', function () {
-  // return gulp.src('OneDark-Pro/themes/*')
-    return gulp.src('One-Dark-Side.json')
+    return gulp.src('OneDark-Pro.json')
 
         // Output Copy of Main
-        .pipe(each(function(content, file, callback) {
-            // Making clear it is the copied-over version.
-            content = JSON.stringify(JSON.parse(content)) + '\n';
-            callback(null, content);
-        }))
         .pipe(gulp.dest('../themes/'))
 
         // From Main theme to Soft
@@ -90,14 +95,14 @@ gulp.task('mains', function () {
             callback(null, content);
         }))
         .pipe(rename(function (path) {
-            path.basename += "-Soft";
+            path.basename += '-Soft';
             return path;
         }))
         .pipe(gulp.dest('../themes/'));
 });
 
 gulp.task('vivids', function () {
-    return gulp.src('One-Dark-Side.json')
+    return gulp.src('OneDark-Pro.json')
 
         // From Main theme to Vivid
         .pipe(each(function(content, file, callback) {
@@ -105,7 +110,7 @@ gulp.task('vivids', function () {
             callback(null, content);
         }))
         .pipe(rename(function (path) {
-            path.basename += "-Vivid";
+            path.basename += '-Vivid';
             return path;
         }))
         .pipe(gulp.dest('../themes/'))
@@ -116,19 +121,19 @@ gulp.task('vivids', function () {
             callback(null, content);
         }))
         .pipe(rename(function (path) {
-            path.basename += "-Soft";
+            path.basename += '-Soft';
             return path;
         }))
         .pipe(gulp.dest('../themes/'));
 });
 
-// Default and Watch tasks
+gulp.task('download', function () {
+    return download('https://raw.githubusercontent.com/Binaryify/OneDark-Pro/master/themes/OneDark-Pro.json')
+        .pipe(gulp.dest('./'));
+});
 
+// Default Task - Launch All
 gulp.task('default', function(callback) {
-    gulp.start('mains', 'vivids');
+  runSequence('download', ['mains', 'vivids'], callback);
 });
 
-gulp.task('watch', function(callback) {
-    gulp.start('default');
-    gulp.watch('*.json', ['mains', 'vivids']);
-});
